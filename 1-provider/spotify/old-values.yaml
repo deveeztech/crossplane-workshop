@@ -13,5 +13,20 @@ clientCredentialsSecret:
   spotifyClientID: b44500c3a2514c54ad134ecfb623b4c2
   spotifyClientSecret: eb446ac484014808a16fcd298b9c5c41
 
+# (Optional) The secret that sets the SPOTIFY_PROXY_API_KEY env var.
+proxyAPIKeySecret:
+  # Specifies whether the proxy API Key secret should be created.
+  create: true
+  # If external is true, then a manually created secret is expected in order to
+  # set the value of the environment variable described above.
+  # If both "create" and "external" are true, then the "external" prevails.
+  external: false
+  # The name of the secret. If not set, a name is generated using the fullname template.
+  name: ""
+  # Annotations to add to the secret
+  annotations: {}
+  # Required secret key (only if "create: true" and "external: false")
+  spotifyProxyAPIKey: qwerty12345
+
 image:
-  tag: 0.2.6
+  tag: main
