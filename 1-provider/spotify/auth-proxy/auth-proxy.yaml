@@ -11,11 +11,8 @@ metadata:
   name: spotify-auth-proxy-api-key
   namespace: spotify-auth-proxy 
   labels:
-    helm.sh/chart: spotify-auth-proxy-0.2.1
     app.kubernetes.io/name: spotify-auth-proxy
     app.kubernetes.io/instance: spotify-auth-proxy
-    app.kubernetes.io/version: "0.2.7"
-    app.kubernetes.io/managed-by: Helm
 data:
   spotifyProxyAPIKey: cXdlcnR5MTIzNDU=
 ---
@@ -26,11 +23,8 @@ metadata:
   name: spotify-auth-proxy-credentials
   namespace: spotify-auth-proxy
   labels:
-    helm.sh/chart: spotify-auth-proxy-0.2.1
     app.kubernetes.io/name: spotify-auth-proxy
     app.kubernetes.io/instance: spotify-auth-proxy
-    app.kubernetes.io/version: "0.2.7"
-    app.kubernetes.io/managed-by: Helm
 data:
   spotifyClientID: YjQ0NTAwYzNhMjUxNGM1NGFkMTM0ZWNmYjYyM2I0YzI=
   spotifyClientSecret: ZWI0NDZhYzQ4NDAxNDgwOGExNmZjZDI5OGI5YzVjNDE=
@@ -42,11 +36,8 @@ metadata:
   name: spotify-auth-proxy
   namespace: spotify-auth-proxy
   labels:
-    helm.sh/chart: spotify-auth-proxy-0.2.1
     app.kubernetes.io/name: spotify-auth-proxy
     app.kubernetes.io/instance: spotify-auth-proxy
-    app.kubernetes.io/version: "0.2.7"
-    app.kubernetes.io/managed-by: Helm
 spec:
   type: ClusterIP
   ports:
@@ -65,11 +56,8 @@ metadata:
   name: spotify-auth-proxy
   namespace: spotify-auth-proxy
   labels:
-    helm.sh/chart: spotify-auth-proxy-0.2.1
     app.kubernetes.io/name: spotify-auth-proxy
     app.kubernetes.io/instance: spotify-auth-proxy
-    app.kubernetes.io/version: "0.2.7"
-    app.kubernetes.io/managed-by: Helm
 spec:
   replicas: 1
   selector:
@@ -79,11 +67,8 @@ spec:
   template:
     metadata:
       labels:
-        helm.sh/chart: spotify-auth-proxy-0.2.1
         app.kubernetes.io/name: spotify-auth-proxy
         app.kubernetes.io/instance: spotify-auth-proxy
-        app.kubernetes.io/version: "0.2.7"
-        app.kubernetes.io/managed-by: Helm
     spec:
       serviceAccountName: default
       securityContext:
@@ -92,7 +77,7 @@ spec:
         - name: spotify-auth-proxy
           securityContext:
             {}
-          image: "ghcr.io/conradludgate/spotify-auth-proxy@sha256:d9f54a4d6faa2d3c32798808fffe69beb9713e560641c9ad79c8e20f1fa2bc86"
+          image: "ghcr.io/deveeztech/spotify-auth-proxy:0.1.2"
           imagePullPolicy: IfNotPresent
           ports:
             - name: callback
@@ -135,13 +120,8 @@ metadata:
   name: "spotify-auth-proxy-test-connection"
   namespace: spotify-auth-proxy
   labels:
-    helm.sh/chart: spotify-auth-proxy-0.2.1
     app.kubernetes.io/name: spotify-auth-proxy
     app.kubernetes.io/instance: spotify-auth-proxy
-    app.kubernetes.io/version: "0.2.7"
-    app.kubernetes.io/managed-by: Helm
-  annotations:
-    "helm.sh/hook": test
 spec:
   containers:
     - name: wget

@@ -2,5 +2,6 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-spotify
+  namespace: crossplane-system
 spec:
   package: crossplane-contrib/provider-spotify:v0.2.3
