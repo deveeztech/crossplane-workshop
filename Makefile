@@ -29,14 +29,10 @@ dev: $(KIND) $(KUBECTL) $(HELM3) ## dev: Prepare a development environment
 install-spotify-provider: $(HELM3) $(KUBECTL) ## install-spotify-provider: Install Spotify Provider and auth-proxy
 	@$(INFO) Installing Spotify Provider
 	@$(KUBECTL) apply -f 1-provider/spotify/provider
-	@$(INFO) Installing Spotify Auth Proxy
-	@$(KUBECTL) apply -f 1-provider/spotify/auth-proxy
 
 uninstall-spotify-provider: $(HELM3) $(KUBECTL) ## uninstall-spotify-provider: Uninstall Spotify Provider and auth-proxy
 	@$(INFO) Uninstalling Spotify Provider
 	@$(KUBECTL) delete -f 1-provider/spotify/provider
-	@$(INFO) Uninstalling Spotify Auth Proxy
-	@$(KUBECTL) delete -f 1-provider/spotify/auth-proxy
 	
 dev-clean: $(KIND) $(KUBECTL) ## dev-clean: Clean up development environment
 	@$(INFO) Deleting kind cluster
