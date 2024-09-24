@@ -39,10 +39,10 @@ spec:
                   type: array
                   items:
                     type: string
-                  enum:
-                    - slack
-                    - teams
-                    - google
+                    enum:
+                      - slack
+                      - teams
+                      - google
               required:
                 - name
                 - trackIDs
