@@ -34,6 +34,15 @@ spec:
                   minItems: 1
                 createdBy:
                   type: string
+                # this will be used later on
+                notifyOn:
+                  type: array
+                  items:
+                    type: string
+                  enum:
+                    - slack
+                    - teams
+                    - google
               required:
                 - name
                 - trackIDs
