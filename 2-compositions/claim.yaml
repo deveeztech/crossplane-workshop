@@ -1,0 +1,15 @@
+apiVersion: workshop.deveez.com/v1alpha1
+kind: Album
+metadata:
+  name: crossplane-generated-playlist
+spec:
+  compositionSelector:
+    matchLabels:
+      selectors.deveez.com/component: album
+      selectors.deveez.com/team: crossplane
+      selectors.deveez.com/channel: alpha
+  name: "This is a crossplane test"
+  trackIDs:
+    - 51MbtYQHW8ph3lE5oyfLLs
+    - 5f5RzlEgheGXEsYAvmYil8
+  createdBy: "dukanto"

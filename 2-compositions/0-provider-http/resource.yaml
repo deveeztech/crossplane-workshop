@@ -1,0 +1,21 @@
+apiVersion: http.crossplane.io/v1alpha2
+kind: Request
+metadata:
+  name: test-rq
+spec:
+  providerConfigRef:
+    name: demo-endpoint
+  forProvider:
+    headers:
+      Content-Type:
+        - application/json
+    payload:
+      baseUrl: "https://crossplaneworkshop.free.beeceptor.com/api/google"
+    mappings:
+      - method: "POST" #Create
+        body: '{title: "A new playlist has been added!",description: "This will be dynamic",managedby: "crossplane"}'
+        url: .payload.baseUrl
+      - method: "GET" #Observe
+        url: (.payload.baseUrl + "/" + (.response.body.id|tostring)) 
+      - method: "DELETE" #Delete
+        url: (.payload.baseUrl + "/" + (.response.body.id|tostring)) 
