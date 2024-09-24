@@ -12,4 +12,4 @@ spec:
     description: "created and managed by crossplane-provider-spotify"
     public: true
   providerConfigRef:
-    name: default
+    name: deveez-dev

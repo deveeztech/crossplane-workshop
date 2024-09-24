@@ -23,3 +23,4 @@ spec:
             - name: package-runtime
               args:
                 - --debug
+                - --poll=1m

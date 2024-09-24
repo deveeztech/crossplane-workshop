@@ -10,4 +10,4 @@ spec:
     tracks:
       - "6WatFBLVB0x077xWeoVc2k"
   providerConfigRef:
-    name: default
+    name: deveez-dev
