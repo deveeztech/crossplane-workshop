@@ -1,0 +1,108 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  labels:
+    crossplane.io/xrd: xcertificates.ipe.inditex.grp
+    selectors.deveez.com/channel: alpha
+    selectors.deveez.com/component: album
+    selectors.deveez.com/team: workshop
+    selectors.deveez.com/type: pipeline
+  name: workshop-album-pipeline
+spec:
+  compositeTypeRef:
+    apiVersion: workshop.deveez.com/v1alpha1
+    kind: XAlbum
+  mode: Pipeline
+  pipeline:
+  - step: playlist
+    functionRef:
+      name: function-patch-and-transform
+    input:
+      apiVersion: pt.fn.crossplane.io/v1beta1
+      environment: null
+      kind: Resources
+      patchSets: []
+      resources:
+      - name: playlist
+        base:
+          apiVersion: playlist.spotify.crossplane.io/v1alpha1
+          kind: Playlist
+          metadata:
+            name: crossplane-generated-playlist
+          spec:
+            forProvider:
+              description: created and managed by crossplane-provider-spotify
+            providerConfigRef:
+              name: deveez-dev
+        patches:
+        - fromFieldPath: spec.public
+          toFieldPath: spec.forProvider.public
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.trackIDs
+          toFieldPath: spec.forProvider.tracks
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.name
+          toFieldPath: spec.forProvider.name
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.createdBy
+          toFieldPath: spec.forProvider.description
+          transforms:
+          - string:
+              fmt: Created by %s
+              type: Format
+            type: string
+          type: FromCompositeFieldPath
+        - fromFieldPath: metadata.annotations[crossplane.io/external-name]
+          toFieldPath: metadata.annotations[playlist-id]
+          type: ToCompositeFieldPath
+  - step: notifications
+    functionRef:
+      name: function-go-templating
+    input:
+      apiVersion: gotemplating.fn.crossplane.io/v1beta1
+      kind: GoTemplate
+      source: Inline
+      inline:
+        template: |
+            {{- $composite := .observed.composite.resource }}
+            {{- $spec := $composite.spec }}
+            {{- $playlist := get .observed.resources "playlist" | default dict}}
+            {{- $playlistID := dig "resource" "metadata" "annotations" "crossplane.io/external-name" "" $playlist}}
+            {{- if $playlistID}}
+
+            {{- if has "google" $spec.notifyOn }}
+            ---
+            apiVersion: http.crossplane.io/v1alpha2
+            kind: Request
+            metadata:
+              annotations:
+                gotemplating.fn.crossplane.io/composition-resource-name: notification-google
+              name: {{ $composite.metadata.name }}-google
+            spec:
+              providerConfigRef:
+                name: demo-endpoint
+              forProvider:
+                headers:
+                  Content-Type:
+                    - application/json
+                payload:
+                  baseUrl: "https://testduk.free.beeceptor.com/api/google"
+                mappings:
+                  - method: "POST" # Create
+                    url: .payload.baseUrl
+                    body: |
+                      {
+                        title: "A new playlist has been added!", 
+                        playlist: "{{$spec.name}}", 
+                        createdBy: "{{$spec.createdBy}}",
+                        url: "https://open.spotify.com/playlist/{{$playlistID}}"
+                      }
+                  - method: "GET" # Observe
+                    url: (.payload.baseUrl + "/" + (.response.body.id|tostring))
+                  - method: "DELETE" # Delete
+                    url: (.payload.baseUrl + "/" + (.response.body.id|tostring))
+            {{- end}}
+            {{- end}}
+  - step: detect-readiness
+    functionRef:
+      name:  function-auto-ready
