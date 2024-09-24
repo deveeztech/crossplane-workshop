@@ -6,7 +6,7 @@ spec:
   compositionSelector:
     matchLabels:
       selectors.deveez.com/component: album
-      selectors.deveez.com/team: crossplane
+      selectors.deveez.com/team: workshop
       selectors.deveez.com/channel: alpha
   name: "This is a crossplane test"
   trackIDs:

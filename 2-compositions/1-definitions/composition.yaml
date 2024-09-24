@@ -5,7 +5,7 @@ metadata:
   labels:
     crossplane.io/xrd: xcertificates.ipe.inditex.grp
     selectors.deveez.com/component: album
-    selectors.deveez.com/team: crossplane
+    selectors.deveez.com/team: workshop
     selectors.deveez.com/channel: alpha
 spec:
   compositeTypeRef:
