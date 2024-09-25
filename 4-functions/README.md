@@ -82,9 +82,9 @@ The CLI accepts various parameters that provides the function request with all n
 # ARGS:
 # -o, --observed-resources: useful to provide a list of already "created" resources (VERY useful if needing data from already created objects in your composition)
 # -e, --extra-resources: all other resources that are not observed by this composition (as environment configs)
-.cache/crossplane beta render 4-functions/claim.yaml 4-functions/composition.yaml 4-functions/functions.yaml
+.cache/crossplane render 4-functions/claim.yaml 4-functions/composition.yaml 4-functions/functions.yaml
 
 # as you can see in the results, something is missing :)
 # let's include the "ready" Playlist, so we can see what the Request would be
-.cache/crossplane beta render 4-functions/claim.yaml 4-functions/composition.yaml 4-functions/functions.yaml -o 4-functions/observed.yaml
+.cache/crossplane render 4-functions/claim.yaml 4-functions/composition.yaml 4-functions/functions.yaml -o 4-functions/observed.yaml
 ```

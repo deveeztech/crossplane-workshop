@@ -25,6 +25,11 @@ dev: $(KIND) $(KUBECTL) $(HELM3) ## dev: Prepare a development environment
 	@$(HELM3) install crossplane --namespace crossplane-system crossplane-stable/crossplane --version=$(CROSSPLANE_VERSION)
 	@$(INFO) Installing Crossplane CRDs
 	@$(KUBECTL) apply --server-side -k https://github.com/crossplane/crossplane//cluster?ref=$(CROSSPLANE_VERSION)
+	@$(INFO) Installing Crossplane CLI
+	@curl -sL https://raw.githubusercontent.com/crossplane/crossplane/$(CROSSPLANE_VERSION)/install.sh -o install-crossplane-cli.sh
+	@chmod +x install-crossplane-cli.sh && XP_VERSION=$(CROSSPLANE_VERSION) ./install-crossplane-cli.sh
+	@rm install-crossplane-cli.sh
+	@mv crossplane ./.cache/crossplane
 	@$(INFO) Installing Komoplane
 	@$(HELM3) repo add komodorio https://helm-charts.komodor.io
 	@$(KUBECTL) create namespace komodorio
