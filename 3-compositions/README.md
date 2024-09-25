@@ -21,7 +21,7 @@ If some resource is not installed or healthy, please raise your hand for help :)
 ![Composition how it works](/docs/composition-how-it-works.svg "Composition how it works")
 
 ### Claim
-A [claim](https://docs.crossplane.io/latest/concepts/claims/) represents a set of managed resources as a single Kubernetes object, inside a namespace.Users create claims when they access the custom API, defined in the XRD.
+A [claim](https://docs.crossplane.io/latest/concepts/claims/) represents a set of managed resources as a single Kubernetes object, inside a namespace. Users create claims when they access the custom API, defined in the XRD.
 
 ### XRD
 Composite Resource Definitions or [XRDs](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) define the schema for a custom API. Users create composite resources (XRs) and Claims (XCs) using the API schema defined by an XRD.
@@ -55,11 +55,11 @@ spec:
   # fill your params here :)
 ~~~
 
-### Check it internal
+### Check it internally
 To view the result in the cluster, you can go to the _Claims_ section in Komoplane or execute:
 ~~~bash
 kubectl get album my-first-claim -n default
 ~~~
 
-### Check it external
+### Check it externally
 - [deveez playlists](https://open.spotify.com/user/31lxtsb5grogjpnytlkdzz63qniy)

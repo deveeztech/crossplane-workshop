@@ -48,11 +48,11 @@ spec:
 
 Note that the `providerConfigRef` should match with the previous **ProviderConfig** created with the right credentials. 
 
-### Check it internal
+### Check it internally
 To view the result in the cluster, you can go to the _Managed Resources_ section in Komoplane or execute:
 ~~~bash
 kubectl get playlists
 ~~~
 
-### Check it external
+### Check it externally
 To view the result, please visit the playlists of [deveez](https://open.spotify.com/user/31lxtsb5grogjpnytlkdzz63qniy)

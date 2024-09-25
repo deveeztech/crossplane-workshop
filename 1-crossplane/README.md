@@ -24,7 +24,7 @@ kubectl get deployments -n crossplane-system
 
 and if any of your deployments are not in available state, please raise your hand for help :)
 
-### What `make dev` do?
+### What does `make dev` do?
 
 - Install kubectl, helm and kind if they are not present in your machine
 - Create a kind cluster
@@ -33,9 +33,9 @@ and if any of your deployments are not in available state, please raise your han
 - Install komoplane
 
 ## UI
-To help undesrtand the objects created and managed by crossplane, we are going to use [komoplane](https://github.com/komodorio/komoplane). The goal is to help Crossplane users to understand the structure of their control plane resources and speed up troubleshooting.
+To help understand the objects created and managed by crossplane, we are going to use [komoplane](https://github.com/komodorio/komoplane). The goal is to help Crossplane users to understand the structure of their control plane resources and speed up troubleshooting.
 
-Application can be accessed:
+Application can be accessed by:
 ~~~bash
 kubectl port-forward -n komodorio svc/komoplane 8090:8090
 ~~~
