@@ -1,13 +1,12 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
+  name: workshop-album-pipeline
   labels:
-    crossplane.io/xrd: xcertificates.ipe.inditex.grp
     selectors.deveez.com/channel: alpha
     selectors.deveez.com/component: album
     selectors.deveez.com/team: workshop
     selectors.deveez.com/type: pipeline
-  name: workshop-album-pipeline
 spec:
   compositeTypeRef:
     apiVersion: workshop.deveez.com/v1alpha1

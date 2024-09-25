@@ -3,7 +3,6 @@ kind: Composition
 metadata:
   name: workshop-album
   labels:
-    crossplane.io/xrd: xcertificates.ipe.inditex.grp
     selectors.deveez.com/type: resources
     selectors.deveez.com/component: album
     selectors.deveez.com/team: workshop
