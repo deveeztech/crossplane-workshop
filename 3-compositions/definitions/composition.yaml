@@ -1,0 +1,82 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: workshop-album
+  labels:
+    selectors.deveez.com/type: resources
+    selectors.deveez.com/component: album
+    selectors.deveez.com/team: workshop
+    selectors.deveez.com/channel: alpha
+spec:
+  compositeTypeRef:
+    apiVersion: workshop.deveez.com/v1alpha1
+    kind: XAlbum
+  resources:
+    - name: playlist
+      base:
+        apiVersion: playlist.spotify.crossplane.io/v1alpha1
+        kind: Playlist
+        metadata:
+          name: crossplane-generated-playlist
+        spec:
+          providerConfigRef:
+            name: deveez-dev
+          forProvider:
+            description: "created and managed by crossplane-provider-spotify"
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.public
+          toFieldPath: spec.forProvider.public
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.trackIDs
+          toFieldPath: spec.forProvider.tracks
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.name
+          toFieldPath: spec.forProvider.name
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.createdBy
+          toFieldPath: spec.forProvider.description
+          transforms:
+            - type: string
+              string:
+                fmt: "Created by %s"
+        # share info between resources
+        - type: ToCompositeFieldPath
+          fromFieldPath: metadata.annotations[crossplane.io/external-name]
+          toFieldPath: metadata.annotations[playlist-id]
+    - name: slack-notification
+      base:
+        apiVersion: http.crossplane.io/v1alpha2
+        kind: Request
+        metadata:
+          name: test-rq
+        spec:
+          providerConfigRef:
+            name: demo-endpoint
+          forProvider:
+            headers:
+              Content-Type:
+                - application/json
+            payload:
+              baseUrl: "https://deveezworkshop.proxy.beeceptor.com/api/google"
+            mappings:
+              - method: "POST" # Create
+                url: .payload.baseUrl
+                body: '{}'
+              - method: "GET" # Observe
+                url: (.payload.baseUrl + "/" + (.response.body.id|tostring))
+              - method: "DELETE" # Delete
+                url: (.payload.baseUrl + "/" + (.response.body.id|tostring))
+      patches:
+        - type: CombineFromComposite
+          toFieldPath: spec.forProvider.mappings[0].body
+          combine:
+            variables:
+              - fromFieldPath: spec.name
+              - fromFieldPath: spec.createdBy
+              - fromFieldPath: metadata.annotations[playlist-id]
+            strategy: string
+            string:
+              fmt: '{title: "A new playlist has been added!", playlist: "%s", createdBy: "%s", url: "https://open.spotify.com/playlist/%s"}'
+          policy:
+            fromFieldPath: Required

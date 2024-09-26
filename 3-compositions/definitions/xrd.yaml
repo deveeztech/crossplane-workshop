@@ -1,0 +1,49 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xalbums.workshop.deveez.com
+spec:
+  defaultCompositeDeletePolicy: Foreground
+  group: workshop.deveez.com
+  names:
+    kind: XAlbum
+    plural: xalbums
+  claimNames:
+    kind: Album
+    plural: albums
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                public:
+                  type: boolean
+                  default: true
+                name:
+                  type: string
+                trackIDs:
+                  type: array
+                  items:
+                    type: string
+                  minItems: 1
+                createdBy:
+                  type: string
+                # this will be used later on
+                notifyOn:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - slack
+                      - teams
+                      - google
+              required:
+                - name
+                - trackIDs
+                - createdBy

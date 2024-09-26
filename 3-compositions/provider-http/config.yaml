@@ -1,0 +1,7 @@
+apiVersion: http.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: demo-endpoint
+spec:
+  credentials:
+    source: InjectedIdentity

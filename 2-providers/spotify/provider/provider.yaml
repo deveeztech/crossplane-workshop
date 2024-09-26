@@ -1,0 +1,26 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-spotify
+  namespace: crossplane-system
+spec:
+  package: crossplane-contrib/provider-spotify:v0.2.3
+  runtimeConfigRef:
+    name: enable-debug-logs
+
+---
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+  name: enable-debug-logs
+spec:
+  deploymentTemplate:
+    spec:
+      selector: {}
+      template:
+        spec:
+          containers:
+            - name: package-runtime
+              args:
+                - --debug
+                - --poll=1m
