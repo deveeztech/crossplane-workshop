@@ -85,7 +85,7 @@ spec:
                   Content-Type:
                     - application/json
                 payload:
-                  baseUrl: "hhttps://deveezworkshop.proxy.beeceptor.com/api/google"
+                  baseUrl: "https://deveezworkshop.proxy.beeceptor.com/api/google"
                 mappings:
                   - method: "POST" # Create
                     url: .payload.baseUrl
