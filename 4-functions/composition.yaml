@@ -75,8 +75,8 @@ spec:
             kind: Request
             metadata:
               annotations:
-                gotemplating.fn.crossplane.io/composition-resource-name: notification-{{$range}}
-              name: {{ $composite.metadata.name }}-{{$range}}
+                gotemplating.fn.crossplane.io/composition-resource-name: notification-{{$channel}}
+              name: {{ $composite.metadata.name }}-{{$channel}}
             spec:
               providerConfigRef:
                 name: demo-endpoint
@@ -85,7 +85,7 @@ spec:
                   Content-Type:
                     - application/json
                 payload:
-                  baseUrl: "https://deveezworkshop.proxy.beeceptor.com/api/google"
+                  baseUrl: "https://deveezworkshop.proxy.beeceptor.com/api/{{$channel}}"
                 mappings:
                   - method: "POST" # Create
                     url: .payload.baseUrl
