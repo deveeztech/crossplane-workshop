@@ -69,14 +69,14 @@ spec:
             {{- $playlistID := dig "resource" "metadata" "annotations" "crossplane.io/external-name" "" $playlist}}
             {{- if $playlistID}}
 
-            {{- if has "google" $spec.notifyOn }}
+            {{- range $channel := $spec.notifyOn }}
             ---
             apiVersion: http.crossplane.io/v1alpha2
             kind: Request
             metadata:
               annotations:
-                gotemplating.fn.crossplane.io/composition-resource-name: notification-google
-              name: {{ $composite.metadata.name }}-google
+                gotemplating.fn.crossplane.io/composition-resource-name: notification-{{$range}}
+              name: {{ $composite.metadata.name }}-{{$range}}
             spec:
               providerConfigRef:
                 name: demo-endpoint
@@ -85,7 +85,7 @@ spec:
                   Content-Type:
                     - application/json
                 payload:
-                  baseUrl: "hhttps://deveezworkshop.proxy.beeceptor.com/api/google"
+                  baseUrl: "hhttps://deveezworkshop.proxy.beeceptor.com/api/{{$range}}"
                 mappings:
                   - method: "POST" # Create
                     url: .payload.baseUrl
