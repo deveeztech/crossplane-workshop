@@ -67,7 +67,7 @@ Crossplane provides a way to migrate old resources compositions (those that used
 
 You can test this migration yourself and compare with the one we used before by doing:
 ```bash
-.cache/crossplane beta convert pipeline-composition 3-compositions/definitions/composition.yaml > 4/functions/composition_migrated.yaml
+.cache/crossplane beta convert pipeline-composition 3-compositions/definitions/composition.yaml > 4-functions/composition_migrated.yaml
 ```
 
 ### Debugging pipeline compositions
